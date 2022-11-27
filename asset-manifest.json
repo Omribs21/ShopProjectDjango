@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/ShopProjectDjango/static/css/main.05839e3d.css",
+    "main.js": "/ShopProjectDjango/static/js/main.128b4597.js",
+    "static/media/ArgentinaShirt.jpeg": "/ShopProjectDjango/static/media/ArgentinaShirt.97bccc9a50f1b9f7c8e3.jpeg",
+    "static/media/ArgentinaShritBack.jpeg": "/ShopProjectDjango/static/media/ArgentinaShritBack.1548bd872c9b6aeea69b.jpeg",
+    "static/media/messiShirt.jpg": "/ShopProjectDjango/static/media/messiShirt.95aecab88c9f9c13c9bf.jpg",
+    "static/media/GiannisUndershirt.jpeg": "/ShopProjectDjango/static/media/GiannisUndershirt.eb730731421dda8591d3.jpeg",
+    "index.html": "/ShopProjectDjango/index.html",
+    "main.05839e3d.css.map": "/ShopProjectDjango/static/css/main.05839e3d.css.map",
+    "main.128b4597.js.map": "/ShopProjectDjango/static/js/main.128b4597.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.05839e3d.css",
+    "static/js/main.128b4597.js"
+  ]
+}
