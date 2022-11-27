@@ -13,16 +13,15 @@ import { useSelector,useDispatch } from 'react-redux';
 import { selectUserName,selectToken } from '../Slicers/loginSlice';
 import { doSignOutAsync } from '../Slicers/logoutSlice';
 import { Link } from 'react-router-dom';
-import  { useState ,useEffect} from 'react'
-import AlertDialogRegister from './Alert';
+import  { useState } from 'react'
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch()
   const token = useSelector(selectToken)
-  const [username, setusername] = useState("")
   const userName = useSelector(selectUserName)
   const open = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -30,10 +29,7 @@ export default function AccountMenu() {
     setAnchorEl(null);
   };
 
-  // const [username, setusername] = useState("")
-  // const user = useSelector(selectUserName)
-  // setusername(user)
-  // console.log(username)
+ 
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>

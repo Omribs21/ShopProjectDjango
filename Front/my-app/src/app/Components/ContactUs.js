@@ -61,34 +61,41 @@ export default function ContactUs() {
 
   return (
     <div>
-      <Button style={{color:"black",fontSize:"15px"}} variant="filled" onClick={handleClickOpen}>
-       Contact Us <ArrowForwardIcon style={{fontSize:"large"}}/>
-      </Button>
+      <div style={{display:"flex", flexDirection:"row" , justifyContent:"center"}}>
+
+        <Button style={{ color: "white", fontSize: "15px" }} variant="filled" onClick={handleClickOpen}>
+          Contact Us  <ArrowForwardIcon style={{fontSize:"large"}}/>
+          {/* <ArrowForwardIcon style={{fontSize:"large"}}/> */}
+        </Button>
+        <div>
+          <a style={{  }} href="https://www.instagram.com/sofa_sportim/" target={"_blank"} class="fa fa-instagram"></a>
+        </div>
+      </div>
+      
+      
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Modal title
+          <p dir="rtl" style={{textAlign:"center", fontSize:"25px"}}>
+            פרטים ליצירת קשר
+          </p>
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
+            <p>
+              Email:
+            </p>
           </Typography>
           <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
+            <p>
+              Phone:
+            </p>
           </Typography>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{display:"flex",flexDirection:"row-reverse"}} >
           <Button autoFocus onClick={handleClose}>
             OK
           </Button>

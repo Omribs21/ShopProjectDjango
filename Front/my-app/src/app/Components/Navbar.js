@@ -8,7 +8,6 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { selectLogged } from '../Slicers/orderSlice';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import MoreIcon from '@mui/icons-material/MoreVert';
@@ -16,15 +15,13 @@ import SwipeableTemporaryDrawer from './Menu';
 import NotSignedInAcc from './NotSignedInMenu';
 import AccountMenu from './AccountMenu';
 import { Link } from "react-router-dom";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react'
-import { GetProdFromWishlistAsync, selectallprods } from '../Slicers/GetProdFromWishlistSlice';
 import { selectToken } from '../Slicers/loginSlice';
-import { selectprod } from '../Slicers/GetProdByIdSlice'; // all the prods from the wishlist
 import { GetWishlistAsync, selectproductswishlist, selectlength } from '../Slicers/getWishlistSlice'
 import 'animate.css';
+import WishlistDrawer from './WishlistDrawer';
+import MyCartDrawer from './MycartDrawer';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -77,22 +74,33 @@ export default function PrimarySearchAppBar() {
   const dispatch = useDispatch()
   const Products = useSelector(selectproductswishlist)
   const WishlistLength = useSelector(selectlength)
-
-
-
+  const [myCart, setmyCart] = useState([])
+  const [amountCng, setamountCng] = useState(0)
   useEffect(() => {
     if (token != "") {
       setTokenValue(true);
     }
     else { setTokenValue(false) }
-
   }, [token])
 
   useEffect(() => {
     dispatch(GetWishlistAsync({ "Token": token }))
-  }, [])
+  }, [token])
 
+  const [items, setItems] = useState([]);
+  const [cartLength, setcartLength] = useState(0)
 
+  // useEffect(() => {
+  //   const items = JSON.parse(localStorage.getItem('items'));
+  //   if (items) {
+  //     setItems(items);
+  //   }
+  // }, []);
+  
+  // get the cart length
+  useEffect(() => {
+    setcartLength(localStorage.getItem('myCart').length)
+  }, [myCart]);
 
 
 
@@ -203,53 +211,30 @@ export default function PrimarySearchAppBar() {
             sx={{ display: { xs: 'none', sm: 'block' } }}
             marginLeft="38%"
             fontSize="40px"
-            textAlign="center"
-
-          >
+            textAlign="center">
             <Link class="animate__animated animate__pulse" to="/products"><p style={{ color: "white", fontSize: "40px", fontFamily: "monospace" }} class="animate__animated animate__wobble">Sofa Sportim</p></Link>
           </Typography>
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
               {TokenValue === false ?
                 <Badge badgeContent={0} color="error">
-                  {/* <FavoriteBorderIcon style={{ color: "white", width: "40px", height: "40px" }}></FavoriteBorderIcon> */}
-
                   <lord-icon
                     src="https://cdn.lordicon.com/pnhskdva.json"
                     trigger="hover"
                     colors="primary:#ffffff">
                   </lord-icon>
-
                 </Badge> :
                 <Badge badgeContent={WishlistLength} style={{ fontSize: "20px" }} color="error">
-                  <Link to="/wishlist"><lord-icon
-                    src="https://cdn.lordicon.com/pnhskdva.json"
-                    trigger="hover"
-                    colors="primary:#ffffff">
-                  </lord-icon></Link>
+                  <WishlistDrawer />
                 </Badge>}
-
             </IconButton>
-            <IconButton
-              size="50px"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              {TokenValue === false ? <Badge badgeContent={0} color="error">
-                <Link to="/shopingcart" ><script src="https://cdn.lordicon.com/qjzruarw.js"></script>
-                  <lord-icon
-                    src="https://cdn.lordicon.com/medpcfcy.json"
-                    trigger="hover"
-                    colors="primary:#ffffff">
-                  </lord-icon></Link>
-              </Badge> : <Badge badgeContent={5} color="error">
-                <Link to="/shopingcart" ><lord-icon
-                  src="https://cdn.lordicon.com/medpcfcy.json"
-                  trigger="hover"
-                  colors="primary:#ffffff">
-                </lord-icon></Link>
-              </Badge>}
+
+            <IconButton>
+              <Badge badgeContent={5} color="error">
+                <MyCartDrawer />
+              </Badge>
             </IconButton>
 
             <IconButton

@@ -10,6 +10,7 @@ import loginReducer from './Slicers/loginSlice';
 import logoutReducer from './Slicers/logoutSlice';
 import orderReducer from './Slicers/orderSlice';
 import registerReducer from './Slicers/registerSlice';
+import RemoveFromWishlistReducer from './Slicers/RemoveFromWishlistSlice';
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
     addnewprod: addNewProdReducer,
     Getprodfromwishlist: GetProdFromWishlistReducer,
     getprodbyid: GetProdByIdReducer,
-    getallprods: GetAllProductsReducer
+    getallprods: GetAllProductsReducer,
+    Removefromwishlist:  RemoveFromWishlistReducer
   },
 });

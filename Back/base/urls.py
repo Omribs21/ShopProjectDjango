@@ -1,22 +1,24 @@
 from django.urls import path
 from . import views
-from .views import GetWishlist,DeleteFromWishlist,Wishlist,AddOrder,GetProducts,UpdatePriceToPrudct,AddCategory,GetProductsByCategory, MyTokenObtainPairView,AddProduct
+from .views import UpdateUser,DeleteAllWishlist,GetWishlist,DeleteFromWishlist,Wishlist,AddOrder,GetProducts,UpdatePriceToPrudct,AddCategory,GetProductsByCategory, MyTokenObtainPairView,AddProduct
 
 
 urlpatterns = [
      path('test/', views.get_data),
-     path('register/', views.register),# register to the website 
-     path('updateProd/',views.UpdatePriceToPrudct),
-     path('products/<id>/',views.GetProducts),# get product by his category id
-     path('products/',views.GetProducts), # get all products
-     path("addProduct/", views.AddProduct),
+     path('register/', views.register),# Register to the website.
+     path('updateProd/',views.UpdatePriceToPrudct), # Update Product price.
+     path('products/<id>/',views.GetProducts),# Get Product by his category id
+     path('products/',views.GetProducts), # Get all Products
+     path("addProduct/", views.AddProduct), # Add new Product to DB
      path("getprodbycat/",views.GetProductsByCategory),
      # path('mycartprods/',views.GetCartProdsbyidw),
      path('addOrder/',views.AddOrder),
      path("addCategory/",views.AddCategory),
      path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),# log in
-     path('logout/',views.myLogout),
-     path('AddToWishlist/',views.AddToWishlist),
-     path('RemoveFromWishlist/', views.DeleteFromWishlist),
-     path('GetWishlist/',views.GetWishlist),
+     path('logout/',views.myLogout), # Logout of the website.
+     path('AddToWishlist/',views.AddToWishlist), # Add an item to the user Wishlist 
+     path('RemoveFromWishlist/', views.DeleteFromWishlist), # Remove specific item from Wishlist
+     path('GetWishlist/',views.GetWishlist), # Get all of the user items in his Wishlist
+     path('DeleteWishlist/', views.DeleteAllWishlist), # Clean the user Wishlist.
+     path('UpdateUser/',views.UpdateUser),
 ]

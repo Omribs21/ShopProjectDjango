@@ -61,7 +61,7 @@ export default function ReturnPolicy() {
 
   return (
     <div>
-      <Button style={{color:"black",fontSize:"15px"}} variant="filled" onClick={handleClickOpen}>
+      <Button style={{color:"white",fontSize:"15px"}} variant="filled" onClick={handleClickOpen}>
        Return Policy <AutorenewIcon style={{fontSize:"large"}}></AutorenewIcon>
       </Button>
       <BootstrapDialog
@@ -70,27 +70,29 @@ export default function ReturnPolicy() {
         open={open}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Modal title
+          <p dir='rtl' style={{textAlign:"center", fontSize:"25px"}}>
+            מדיניות החזרה
+          </p>
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
+            <p dir='rtl'>
+            אנו ב SOFA SPORT לא מחזיקים במלאי מוצרים וההזמנות מתבצעות באופן פרטי ופר הזמנה, ולכן לא תינתן אפשרות להחליף או להחזיר את המוצר.
+
+
+            </p>
           </Typography>
           <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
+            <p dir='rtl'>
+              במידה והמוצר הגיע פגום ו/או שונה מהמוצר שהוזמן, ניתן ליצור איתנו קשר בדרכי ההתקשרות וניתן את המענה בהתאם.
+            </p>
           </Typography>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{display:"flex",flexDirection:"row-reverse"}}>
           <Button autoFocus onClick={handleClose}>
-            OK
+            <p dir="rtl">
+              הבנתי
+            </p>
           </Button>
         </DialogActions>
       </BootstrapDialog>

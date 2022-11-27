@@ -8,9 +8,9 @@ import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import GiannisUndershirt from "../images/GiannisUndershirt.jpeg"
 import { useSelector } from 'react-redux';
 import { selectAllprods } from '../Slicers/GetAllProductsSlice';
+import messishirt from "../images/messiShirt.jpg"
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -50,7 +50,7 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export default function CustomizedDialogsModal() {
+export default function MessiModal() {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -76,6 +76,9 @@ export default function CustomizedDialogsModal() {
  
     const addToCart = (item) => {
         let temp = myCart.find((x) => x._id === item._id);
+        let sizetemp = myCart.find((y) => y.size === item.size)
+        console.log(sizetemp)
+        console.log(temp)
         if (temp) {
             //   console.log(temp);
             temp.amount += item.amount;
@@ -95,7 +98,7 @@ export default function CustomizedDialogsModal() {
     return (
         <div>
             <Button onClick={handleClickOpen}>
-                <img src={GiannisUndershirt} className="img-responsive" style={{ width: "70%", margin: "auto" }} alt="nice" />
+                <img src={messishirt} className="img-responsive" style={{ width: "70%", margin: "auto" }} alt="nice" />
             </Button>
             <BootstrapDialog
                 onClose={handleClose}
@@ -104,7 +107,7 @@ export default function CustomizedDialogsModal() {
                 
             >
                 <BootstrapDialogTitle style={{backgroundColor:"#AAAAAA"}} id="customized-dialog-title" onClose={handleClose}>
-                    <p style={{ textAlign: "center", fontSize: "20px" }}>GiannisUndershirt</p>
+                    <p style={{ textAlign: "center", fontSize: "20px" }}>messi shirt</p>
                     <p style={{ textAlign: "center", fontSize: "20px" }}>Price: 150</p>
 
                 </BootstrapDialogTitle>
@@ -140,7 +143,7 @@ export default function CustomizedDialogsModal() {
                             </p>
                         </Typography>
                         <Typography gutterBottom>
-                            <img src={GiannisUndershirt} className="img-responsive" style={{ width: "70%", margin: "auto" }} alt="nice" />
+                            <img src={messishirt} className="img-responsive" style={{ width: "70%", margin: "auto" }} alt="nice" />
                         </Typography>
                     </div>
                     <p style={{ fontSize: "15px" }}>Product desc:
@@ -153,7 +156,7 @@ export default function CustomizedDialogsModal() {
                                     desc: ALLPRODUCTS[1].desc,
                                     amount: Number( Quantitycount),
                                     price: ALLPRODUCTS[2].price,
-                                    
+                                    size:Size,
                                 } )}style={{ fontSize: "large" }} >
                                     {/* onClick={handleClose} */}
                         Add to cart

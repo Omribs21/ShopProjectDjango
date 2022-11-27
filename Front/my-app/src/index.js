@@ -9,8 +9,6 @@ import Register from './app/Components/Register';
 import ProductsCards from './app/Components/ProductsCards';
 import LoginPage from './app/Components/LoginPage';
 import GiannisUs from './app/ItemPages/GiannisUs';
-import Wishlist from './app/Components/Wishlist';
-import ShopingCart from './app/Components/ShopingCart';
 import MyProfile from './app/Components/MyProfile';
 
 
@@ -27,8 +25,6 @@ root.render(
             </Route>
             <Route path="login" element={<LoginPage/>}/>
             <Route path="/myprofile" element={<MyProfile/>}></Route>
-            <Route path="wishlist" element={<Wishlist/>}></Route>
-            <Route path="shopingcart" element={<ShopingCart/>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

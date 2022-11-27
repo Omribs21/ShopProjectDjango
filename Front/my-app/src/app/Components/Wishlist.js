@@ -1,70 +1,45 @@
-import { Button } from '@mui/material'
 import React from 'react'
-import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { GetWishlistAsync} from '../Slicers/getWishlistSlice'
+import { GetWishlistAsync } from '../Slicers/getWishlistSlice'
 import { selectproductswishlist } from '../Slicers/getWishlistSlice'
 import { selectToken } from '../Slicers/loginSlice'
-import BasicMenu from './DashboardSizes'
-import { GetProdByIdAsync, selectprod } from '../Slicers/GetProdByIdSlice'
-
+import { GetAllProductsAsync, selectAllprods } from '../Slicers/GetAllProductsSlice'
 
 const Wishlist = () => {
   const dispatch = useDispatch()
   const token = useSelector(selectToken)
-  const [MyWishlist, setMyWishlist] = useState([])
-  const Singleprod = useSelector(selectprod)
-  // const allProducts = useSelector(selectproducts);
-  // useEffect(() => {
-  //     setmy(...my, dispatch(GetWishlistAsync({"Token":token})))
-  // }, [my.length])
-
-const Wishlistproducts = useSelector(selectproductswishlist)
-useEffect(() => {
-  // products.forEach(element => {
-  //   MyWishlist.push(dispatch(GetProdByIdAsync(element.prod_id)))
-   
-  },[]);
+  const Wishlistproducts = useSelector(selectproductswishlist)
+  const allProds = useSelector(selectAllprods)
   
+  useEffect(() => {
+    GetWishlistAsync({ "Token": token });
+    console.log(Wishlistproducts)
+    GetAllProductsAsync();
+    console.log(allProds)
+  }, [token.length])
 
-  const count = 0   
   return (
     <div>
-      <button  onClick={() => {dispatch(GetWishlistAsync({"Token":token}))} }>get wishlist</button>
-      {/* <button onClick={setdata()}>press</button> */}
-      
-      {Wishlistproducts.map((prod,index) => {
-        return (
-        <div key={index}>
-          {console.log(prod)}
-          
-          {()=> dispatch(GetProdByIdAsync(prod.prod_id))}
-          {Singleprod[0].desc}
-        </div>
-        
-        )
-        
-      })}
-
-      {MyWishlist.map((pr,index)=>(
-        <div>
-            {JSON.stringify(pr[index])}
-        </div>
-      ))}
-     
+      <button onClick={() => { dispatch(GetWishlistAsync({ "Token": token })) }}>Show My Wishlist</button>
+      <div>
+        {Wishlistproducts.length > 0 ? Wishlistproducts.map((prod) =>
+          <div>
+            Product: {allProds[prod.prod_id].desc} <br></br>
+            Price: {allProds[prod.prod_id].price}
+          </div>)
+         : null}     
+      </div>
 
 
-      <div class="header">
-
-        <div class="inner-header flex">
+      {/* <div class="inner-header flex">
           <svg version="1.1" class="logo" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 500" xmlSpace="preserve">
             <path fill="#FFFFFF" stroke="#000000" stroke-width="10" stroke-miterlimit="10" d="M57,283" />
           </svg>
-        </div>
+        </div>  */}
 
-        {/* <div>
+      {/* <div>
           <svg class="waves" xmlns='http://www.w3.org/2000/svg' xmlnsXlink='http://www.w3.org/1999/xlink'
             viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
             <defs>
@@ -78,7 +53,7 @@ useEffect(() => {
             </g>
           </svg>
         </div>  */}
-      </div>
+      {/* </div> */}
 
     </div>
   )

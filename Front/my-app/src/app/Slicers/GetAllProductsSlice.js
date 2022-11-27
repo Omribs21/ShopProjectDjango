@@ -19,7 +19,7 @@ export const GetAllProductsAsync = createAsyncThunk(
     reducers: {},
     extraReducers: (builder) => {
       builder.addCase(GetAllProductsAsync.fulfilled, (state, action) => {
-        console.log(action.payload)
+        // console.log(action.payload)
         state.AllProducts = action.payload
       });
     },

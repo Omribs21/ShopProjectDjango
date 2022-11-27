@@ -1,11 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Login } from "../API/loginAPI";
 import jwt_decode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 const initialState = {
   userName: "",
   email: "",
   token: "",
   logged: false,
+  id: "",
+  first_name:"",
+  last_name:"",
 
 };
 
@@ -16,22 +20,6 @@ export const LoginAsync = createAsyncThunk(
     return response.data;
   }
 );
-// export const doSignupAsync = createAsyncThunk(
-//   'login/Register',
-//   async (cred) => {
-//       console.log(cred)
-//       const response = await Register(cred);
-//       return response.data;
-//   }
-// );
-// export const doSignOutAsync = createAsyncThunk(
-//   'login/myLogout',
-//   async (token) => {
-//       console.log(token)
-//       const response = await myLogout(token);
-//       return response.data;
-//   }
-// );
 
 export const LoginSlice = createSlice({
   name: "login",
@@ -45,6 +33,10 @@ export const LoginSlice = createSlice({
           state.token = action.payload.access
           state.logged = true;
           state.userName = jwt_decode(state.token).username
+          state.id = jwtDecode(state.token).user_id
+          state.first_name = jwtDecode(state.token).first_name
+          state.last_name = jwtDecode(state.token).last_name
+          state.email = jwtDecode(state.token).email
           console.log(state.userName)
           console.log(state.token)
           // state.email = jwt_decode(action.payload.access).eeemail
@@ -66,6 +58,10 @@ export const LoginSlice = createSlice({
 
 
 export default LoginSlice.reducer;
+export const selectEmail = (state) => state.login.email;
 export const selectLogged = (state) => state.login.logged;
 export const selectToken = (state) => state.login.token;
 export const selectUserName = (state) => state.login.userName;
+export const selectUserId = (state) => state.login.id;
+export const selectFirstName = (state) => state.login.first_name 
+export const selectLastName = (state) => state.login.last_name

@@ -45,13 +45,24 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         # select one row from Profile table (where user = given user)
         token['username'] = user.username
-        # from here it's our code
+        token['first_name'] = user.first_name
+        token['last_name'] = user.last_name  
+        token['email'] = user.email   
+                # from here it's our code
         # pro = Profile.objects.get(user=user)
         # print(pro)
         # our code done
-        # ...
         print("logged")
         return token
+    
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def UpdateUser(request):
+    user_id = request.user.id 
+    city = request.data["city"]
+    temp_user =  User.objects.get(id = user_id)
+    temp_user.city =city
+    return JsonResponse({"updated"})
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -154,21 +165,29 @@ def AddToWishlist(request):
         print(user_id)
         return Response("item added to wishlist.")
 
-
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def DeleteFromWishlist(request):
-    name = Products.objects.get(desc = request.data["prod_id"]) # returnes the name of the product.
-    temp= Products.objects.get(_id = request.data["prod_id"]) # get the product you want to delete by his id.
-    temp.delete() # final delete.
-    return JsonResponse({"item name that deleted":name})
+    # DELETE the item from the Wishlist by its ID and the user ID.
+    Wishlist.objects.filter(prod_id=request.data["prod_id"],user_id = request.data["user_id"]).delete()
+    return JsonResponse({"item ID that deleted":request.data["prod_id"]})
 
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def DeleteAllWishlist(request):
+    # DELETE the whole user's wishlist --> Clean it.
+    user_id = request.data["user_id"]
+    all_products = Wishlist.objects.filter(user_id= user_id)
+    for x in all_products:  
+        x.delete()
+    return JsonResponse({"Your wishlist is empty!":user_id})
+        
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def GetWishlist(request):
-    user_id = request.user.id # returens the user id as int.
+    user_id = request.user.id # returnes the user id as int.
     all_products = Wishlist.objects.filter(user_id = user_id) # returnes all the product of the user 
     count1 = Wishlist.objects.filter(user_id = user_id).count() # counts how many products are in the wishlist.
     print(count1)

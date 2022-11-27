@@ -22,8 +22,8 @@ export const GetWishlistAsync = createAsyncThunk(
     extraReducers: (builder) => {
       builder.addCase(GetWishlistAsync.fulfilled, (state, action) => {
         console.log(action.payload)
-        state.products = action.payload
-        state.length = state.products.length
+        state.Wishlistproducts = action.payload
+        state.length = state.Wishlistproducts.length
       });
     },
   });

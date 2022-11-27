@@ -60,7 +60,7 @@ export default function CustomizedDialogs() {
 
   return (
     <div>
-      <Button style={{color:"black",fontSize:"15px"}} variant="filled" onClick={handleClickOpen}>
+      <Button style={{color:"white",fontSize:"15px"}} variant="filled" onClick={handleClickOpen}>
         Terms & Services
       </Button>
       <BootstrapDialog
@@ -69,27 +69,37 @@ export default function CustomizedDialogs() {
         open={open}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Modal title
+          <p dir='rtl' style={{fontSize:"20px",textAlign:"center"}}>
+            זמני אספקה ואופן תשלום:
+          </p>
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
+            <p dir="rtl">
+              זמני אספקה:
+            </p>
+            <p dir="rtl">
+              המשלוחים שלנו בין 15-25 ימי עסקים, כאשר המשלוח מגיע לנקדות איסוף הסמוכה לביתך תקבל מאיתנו הודעה לאסוף את החבילה.
+            </p>
+
           </Typography>
           <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+          <p dir="rtl">
+              איך התשלום מתבצע?
+            </p>
           </Typography>
           <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
+          <p dir="rtl">
+              התשלום מתבצע דרך אפליקציית PAYBOX/BIT או לחלופין דרך העברה בנקאית.
+              במידה וההזמנה לא מגיעה תוך 60 יום- מעבר לזמן הנדרש תינתן ללקוח אופצייה לזיכוי מלא!
+            </p>
           </Typography>
         </DialogContent>
-        <DialogActions>
+        <DialogActions style={{display:"flex",flexDirection:"row-reverse"}}>
           <Button autoFocus onClick={handleClose}>
-            OK
+          <p dir="rtl">
+            הבנתי
+            </p>
           </Button>
         </DialogActions>
       </BootstrapDialog>
