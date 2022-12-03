@@ -174,12 +174,12 @@ def DeleteFromWishlist(request):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def DeleteAllWishlist(request):
+def CleanWishlist(request):
     # DELETE the whole user's wishlist --> Clean it.
     user_id = request.data["user_id"]
     all_products = Wishlist.objects.filter(user_id= user_id)
-    for x in all_products:  
-        x.delete()
+    for prod in all_products:  
+        prod.delete()
     return JsonResponse({"Your wishlist is empty!":user_id})
         
 

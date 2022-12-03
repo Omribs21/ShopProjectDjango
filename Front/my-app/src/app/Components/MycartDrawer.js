@@ -16,6 +16,9 @@ import { selectproductswishlist } from '../Slicers/getWishlistSlice'
 import { selectToken } from '../Slicers/loginSlice'
 import { GetAllProductsAsync, selectAllprods } from '../Slicers/GetAllProductsSlice'
 import { RemoveFromWishlistAsync } from '../Slicers/RemoveFromWishlistSlice';
+import { Link, Outlet } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function MyCartDrawer() {
     const [state, setState] = React.useState({
@@ -34,13 +37,25 @@ export default function MyCartDrawer() {
 
     const [myCart, setmyCart] = useState([]);
     const [amountCng, setamountCng] = useState(0);
+    const token = useSelector(selectToken)
+    const [MyPesonalCart, setMyPesonalCart] = useState([])
 
-    // run when component load
+
     // useEffect(() => {
-    //     setmyCart(JSON.parse(localStorage.getItem("myCart")));
-    // }, [myCart.length]);
+    //     setMyPesonalCart(JSON.parse(localStorage.getItem('MyPersonalCart')));
+    // }, [MyPesonalCart.length])
 
-    
+    //run when component load
+    useEffect(() => {
+        setmyCart(JSON.parse(localStorage.getItem("myCart")));
+    }, [myCart.length]);
+
+    // useEffect(() => {
+    //     setMyPesonalCart(JSON.parse(localStorage.getItem("MyPesonalCart")));
+    // }, [MyPesonalCart.length]);
+
+
+
 
     const list = (anchor) => (
         <Box
@@ -50,29 +65,25 @@ export default function MyCartDrawer() {
             onKeyDown={toggleDrawer(anchor, false)}
             style={{ backgroundColor: "#DDDDDD" }}
         >
-            <div>
-                <h1 class="animate__animated animate__backInDown" style={{ textAlign: "center" }}>My cart</h1>
-                <Divider />
-                {console.log(myCart.length)}
-                {console.log(myCart)}
-                {myCart.length > 0 ? myCart.map((prod) =>
-                    <div class="animate__animated animate__backInRight" style={{ fontSize: "15px" }}>
-                        Product: {prod.desc}<br></br>
-                        Price:{prod.price}<br></br>
-                        Amount:{prod.amount}<br></br>
-                        Total:{prod.price * prod.amount}
-                        <Divider />
-                    </div>
-                ) : null}
-            </div>
-            <div style={{ display: "flex", marginTop: "0%", flexDirection: "row", justifyContent: "center" }}>
-                <button class="animate__animated animate__backInUp" style={{ marginTop: "5%", marginBottom: "5%", width: "100%", fontSize: "20px", color: "white", backgroundColor: "dodgerblue" }}>Buy!</button>
-            </div>
+
         </Box>
     );
+
+    const notify = () => {
+            toast.info('Log in first', {
+                position: "bottom-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+    }
     return (
         <div>
-            
+
             {['right'].map((anchor) => (
                 <React.Fragment key={anchor}>
                     <Button style={{ color: "white" }} onClick={toggleDrawer(anchor, true)}>
@@ -89,6 +100,36 @@ export default function MyCartDrawer() {
                         onOpen={toggleDrawer(anchor, true)}
                     >
                         {list(anchor)}
+                        <div>
+                            {/* <div>
+                                <h1 class="animate__animated animate__backInDown" style={{ textAlign: "center" }}>My cart</h1>
+                                <Divider />
+                                {console.log(myCart.length)}
+                                {console.log(myCart)}
+                                {myCart.length > 0 ? myCart.map((prod) =>
+                                    <div class="animate__animated animate__backInRight" style={{ fontSize: "15px" }}>
+                                        Product: {prod.desc}<br></br>
+                                        Price:{prod.price}<br></br>
+                                        Amount:{prod.amount}<br></br>
+                                        Total:{prod.price * prod.amount}
+
+                                        <Divider />
+                                    </div>
+                                ) : null}
+                            </div>
+                            <div style={{ display: "flex", marginTop: "0%", flexDirection: "row", justifyContent: "center" }}>
+                                <button class="animate__animated animate__backInUp" style={{ marginTop: "5%", marginBottom: "5%", width: "100%", fontSize: "20px", color: "white", backgroundColor: "dodgerblue" }}>Buy!</button>
+                            </div> */}
+                            {MyPesonalCart.length > 0 ? MyPesonalCart.map((prod) =>
+                                <div>
+                                    {prod.desc}
+
+
+                                </div>
+                            ) : null}
+                            {token != '' ? <Link to="/final_buy"><button>Final buy</button></Link>:<button onClick={notify}>Buy</button>}
+                           
+                        </div>
                     </SwipeableDrawer>
                 </React.Fragment>
             ))}

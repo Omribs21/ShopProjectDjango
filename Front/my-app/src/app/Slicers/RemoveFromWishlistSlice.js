@@ -22,13 +22,5 @@ export const RemoveFromWishlistAsync = createAsyncThunk(
 export const RemoveFromWishlistSlice = createSlice({
     name: "Removefromwishlist",
     initialState,
-    reducers: {
-        addToWishList: (state, action) => {
-            console.log(state);
-            console.log(action.payload);
-          },
-    },
-    
 });
-export const { addToWishList } = RemoveFromWishlistSlice.actions;
 export default RemoveFromWishlistSlice.reducer;

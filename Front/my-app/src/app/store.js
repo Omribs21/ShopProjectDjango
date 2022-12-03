@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import addNewProdReducer from './Slicers/addNewProdSlice';
 import AddToWishlistReducer  from './Slicers/AddToWishlistSlice';
+import CleanWishlistReducer from './Slicers/CleanWishlistSlice';
 import GetAllProductsReducer from './Slicers/GetAllProductsSlice';
 import GetProdByIdReducer from './Slicers/GetProdByIdSlice';
 import GetProdFromWishlistReducer from './Slicers/GetProdFromWishlistSlice';
@@ -25,6 +26,7 @@ export const store = configureStore({
     Getprodfromwishlist: GetProdFromWishlistReducer,
     getprodbyid: GetProdByIdReducer,
     getallprods: GetAllProductsReducer,
-    Removefromwishlist:  RemoveFromWishlistReducer
+    Removefromwishlist:  RemoveFromWishlistReducer,
+    cleanwishlist : CleanWishlistReducer,
   },
 });

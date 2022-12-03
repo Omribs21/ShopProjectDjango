@@ -7,8 +7,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import ArgentinaShirt from '../images/ArgentinaShirt.jpeg'
-import ArgentinaShirtBack from '../images/ArgentinaShritBack.jpeg'
+import psgShirtFront from "../images/PSGshirtFront.jpeg"
+import psgShirtBack from "../images/PSGshirtBack.jpeg"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -50,7 +50,7 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export default function PersonalModal() {
+export default function PsgPersonalModal() {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -69,6 +69,62 @@ export default function PersonalModal() {
     const [amountCng, setamountCng] = useState(0)
     const [Comments, setComments] = useState("")
     const [over, setOver] = useState(false);
+    const [count, setCount] = useState(0);
+
+    const notify = () => {
+
+        if (BackName == '') {
+            toast.error('Please fill the Name field.', {
+                position: "top-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        else if (Size == "") {
+            toast.error('Please fill the Size field.', {
+                position: "top-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        else if (Quantitycount == 0) {
+            toast.error('Please fill the Quantity field.', {
+                position: "top-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        else {
+            toast.success('Your item was added!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    }
+
+
+
 
     // create the data for choosing the patch and handle it.
     const options = [
@@ -105,96 +161,60 @@ export default function PersonalModal() {
         if (!open) { clean(); }
     }, [open])
 
-    const notify = () => {
+    // add new item to the cart at local storage
+  
+    useEffect(() => {
+        setMyPersonalCart(JSON.parse(localStorage.getItem("MyPersonalCart")));
+    }, []);
 
-        if (BackName == '') {
-            toast.error('Please fill the Name field.', {
-                position: "top-left",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: false,
-                progress: undefined,
-                theme: "colored",
-            });
-        }
-        else if(Size == ""){
-            toast.error('Please fill the Size field.', {
-                position: "top-left",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: false,
-                progress: undefined,
-                theme: "colored",
-            });
-        }
-        else if(Quantitycount == 0)
-        {
-            toast.error('Please fill the Quantity field.', {
-                position: "top-left",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: false,
-                progress: undefined,
-                theme: "colored",
-            });
-        }
-        else {
-            toast.success('Your item was added!', {
-                position: "top-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: false,
-                progress: undefined,
-                theme: "colored",
-            });
-        }
-    }
-    
+    //run every change in the length of MyPersonalCart
+    useEffect(() => {
+        console.table(MyPersonalCart)
+        localStorage.setItem("MyPersonalCart", JSON.stringify(MyPersonalCart));
+    }, [MyPersonalCart.length,amountCng]);
 
     const addToCart = (item) => {
+        let temp = MyPersonalCart.find((x) => x._id === item._id);
         if (BackName != "" && Size != "" && Quantitycount > 0) {
-            let temp = MyPersonalCart.find((x) => x._id === item._id);
             if (temp) {
-                //   console.log(temp);
-                temp.amount += item.amount;
-                //   console.log(temp);
-                setMyPersonalCart(MyPersonalCart);
+                console.log(temp);
+                if (temp.desc == item.desc && temp.size == Size) {
+                    temp.amount += item.amount;
+                    setMyPersonalCart(MyPersonalCart);
+                }
+
+
             } else {
                 setMyPersonalCart([...MyPersonalCart, item]);
                 localStorage.setItem("MyPersonalCart", JSON.stringify(MyPersonalCart));
                 // dispatch(sendCart(MyPersonalCart));
             }
             console.table(MyPersonalCart);
+            setMyPersonalCart([...MyPersonalCart, item]);
             localStorage.setItem("MyPersonalCart", JSON.stringify(MyPersonalCart));
             // dispatch(sendCart(MyPersonalCart));
         }
+
     };
     const FinalAddToCart = () => {
+        console.log(MyPersonalCart.length)
         addToCart({
             _id: MyPersonalCart.length + 1,
-            desc: 'Argentina shirt',
+            desc: 'PSG shirt',
             amount: Number(Quantitycount),
             Number: BackNumber,
-            price: 150,
+            price: 180,
             size: Size,
             patch: selected,
             comments: Comments,
-            total: Quantitycount * 150
+            total: Quantitycount * 180
         })
     }
 
     return (
         <div>
             <Button onClick={handleClickOpen}>
-                <img style={{ width: "250px", height: "250px" }} src={ArgentinaShirt}></img>
+                <img style={{ width: "250px", height: "250px" }} src={psgShirtFront}></img>
             </Button>
             <BootstrapDialog
                 onClose={handleClose}
@@ -202,8 +222,8 @@ export default function PersonalModal() {
                 open={open}
             >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    <p style={{ fontSize: "20px", textAlign: 'center' }}>Argentina Shirt 2022/2023</p>
-                    <p style={{ fontSize: "35px", textAlign: 'center' }}>150₪</p>
+                    <p style={{ fontSize: "20px", textAlign: 'center' }}>PSG Shirt 2022/2023</p>
+                    <p style={{ fontSize: "35px", textAlign: 'center' }}>180₪</p>
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
                     <div>
@@ -243,7 +263,7 @@ export default function PersonalModal() {
                                 </div>
                                 <div onMouseOver={() => setOver(true)}
                                     onMouseOut={() => setOver(false)} style={{ paddingLeft: "15px", height: "250px" }}>
-                                    <img src={over ? ArgentinaShirtBack : ArgentinaShirt}
+                                    <img src={over ? psgShirtBack : psgShirtFront}
                                         alt="arrow"
                                         width="250"
                                         height="250" ></img>
@@ -265,15 +285,18 @@ export default function PersonalModal() {
                             </div>
                         </div>
                     </div>
+
                 </DialogContent>
 
-                <Button style={{ fontSize: "large", color: "white", backgroundColor: "#1E90FF" }} onClick={() =>{FinalAddToCart();notify()} }>
+                <Button style={{ fontSize: "large", color: "white", backgroundColor: "#1E90FF" }} onClick={() => { FinalAddToCart(); notify() }}>
+
                     {/* onClick={handleClose} */}
                     Add to cart
                 </Button>
 
 
+
             </BootstrapDialog>
-        </div>
+        </div >
     );
 }

@@ -4,7 +4,7 @@ import { myLogout } from "../API/LogOutAPI";
 const initialState = {
   userName: "",
   email: "",
-  token: "",
+  token: "aa",
   logged: false,
 
 };
@@ -38,5 +38,5 @@ export const LogoutSlice = createSlice({
 
 
 export default LogoutSlice.reducer;
-export const selectLogged = (state) => state.login.logged;
-export const selectToken = (state) => state.login.token;
+export const selectLogged = (state) => state.logout.logged;
+export const selectTokenLogOut = (state) => state.logout.token;

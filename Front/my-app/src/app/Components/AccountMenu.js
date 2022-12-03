@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -9,16 +9,16 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import { useSelector,useDispatch } from 'react-redux';
-import { selectUserName,selectToken } from '../Slicers/loginSlice';
-import { doSignOutAsync } from '../Slicers/logoutSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUserName, selectToken } from '../Slicers/loginSlice';
+import { doSignOutAsync, selectTokenLogOut } from '../Slicers/logoutSlice';
 import { Link } from 'react-router-dom';
-import  { useState } from 'react'
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const dispatch = useDispatch()
   const token = useSelector(selectToken)
+  const LogOutToken = useSelector(selectTokenLogOut)
   const userName = useSelector(selectUserName)
   const open = Boolean(anchorEl);
 
@@ -29,7 +29,17 @@ export default function AccountMenu() {
     setAnchorEl(null);
   };
 
- 
+  // Return the user to the main page after log out.
+  function refreshPage() {
+    window.location.reload(false);
+  }
+  useEffect(() => {
+    if (LogOutToken === '') {
+      refreshPage()
+    } 
+  }, [LogOutToken])
+
+
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -42,7 +52,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 40, height:40 }}>Me</Avatar>
+            <Avatar sx={{ width: 40, height: 40 }}>Me</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -81,8 +91,8 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-    
-        <MenuItem style={{fontSize:"15px",textAlign:"center"}}>
+
+        <MenuItem style={{ fontSize: "15px", textAlign: "center" }}>
           <Avatar /> {userName}
         </MenuItem>
         <Divider />
@@ -90,15 +100,15 @@ export default function AccountMenu() {
           <ListItemIcon>
             <Settings fontSize="large" />
           </ListItemIcon >
-          <Link  style={{fontSize:"15px"}} to = "myprofile">My Profile</Link> 
+          <Link style={{ fontSize: "15px" }} to="myprofile">My Profile</Link>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <Logout fontSize="large" />
           </ListItemIcon>
-          <button style={{fontSize:"20px",border:"none",backgroundColor:"white"}} onClick={()=> {
-            dispatch(doSignOutAsync({"token":token}));
-            }}>Logout</button>
+          <button style={{ fontSize: "20px", border: "none", backgroundColor: "white" }} onClick={() => {
+            dispatch(doSignOutAsync({ "token": token }));
+          }}>Logout</button>
         </MenuItem>
       </Menu>
     </React.Fragment>

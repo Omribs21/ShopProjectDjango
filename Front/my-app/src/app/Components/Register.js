@@ -1,13 +1,15 @@
 // REGISTER PAGE!
 
-import React, { useState ,useEffect} from 'react'
+import React, { useState } from 'react'
 import { RegisterAsync } from "../Slicers/registerSlice";
-import { useDispatch ,useSelector} from "react-redux";
+import { useDispatch } from "react-redux";
 import CustomizedDialogs from './TermsOfService';
 import ContactUs from './ContactUs';
 import ReturnPolicy from './ReturnPolicy';
-import { Link, Outlet ,useNavigate} from 'react-router-dom';
-import { selectToken } from '../Slicers/loginSlice';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Register = () => {
     // Declaring variables of the User
@@ -17,14 +19,91 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [first_name, setFirstName] = useState("");
     const [last_name, setLastName] = useState("");
-    const token = useSelector(selectToken)
     const navigate = useNavigate();
-   
-    useEffect(() => {
-        if (token != '') {
+
+    const notify = () => {
+        if (first_name === '') {
+            toast.error('Please fill the first Name field.', {
+                position: "bottom-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        else if (last_name === "") {
+            toast.error('Please fill the last name field.', {
+                position: "bottom-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        else if (username === '') {
+            toast.error('Please fill the username field.', {
+                position: "bottom-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        else if (password === '') {
+            toast.error('Please fill the password field.', {
+                position: "bottom-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        else if (email === '') {
+            toast.error('Please fill the email field.', {
+                position: "bottom-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+        else {
+            toast.success('Welcome!', {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
             navigate("/products");
-        } // navigate instantly to main page after login.
-    })
+        }
+    }
+
+    const FinalRegister = () => {
+        if (username !== '' && password !== '' && email !== '' & first_name !== '' && last_name !== '') {
+            dispatch(RegisterAsync({ "username": username, "password": password, "email": email, "first_name": first_name, "last_name": last_name}))
+        }
+    }
+
+    
     return (
         <div style={{ zIndex: "1" }} class="header">
             <div style={{ height: "75px" }} class="inner-header flex">
@@ -36,9 +115,9 @@ const Register = () => {
                         <input required class="animate__animated animate__zoomInDown" style={{ width: "60%", borderRadius: "10px", margin: "auto", fontSize: "17px", color: "black", blockSize: "50px" }} placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} />
                         <input required class="animate__animated animate__zoomInDown" style={{ width: "60%", borderRadius: "10px", margin: "auto", fontSize: "17px", color: "black", blockSize: "50px" }} type={'password'} placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)} />
                         <input required class="animate__animated animate__zoomInDown" style={{ width: "60%", borderRadius: "10px", margin: "auto", fontSize: "17px", color: "black", blockSize: "50px" }} type={'email'} placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                        <button class="animate__animated animate__zoomInDown" style={{ width: "15%", borderRadius: "5px", margin: "auto", fontSize: "17px", color: "white", blockSize: "50px", backgroundColor: "dodgerblue" }} type="button"
-                            onClick={
-                                () => { dispatch(RegisterAsync({ "username": username, "password": password, "email": email, "first_name": first_name, "last_name": last_name, "city":"null","district":"null","postal_code":"null","phone":"null" })); }}
+                        <button class="animate__animated animate__zoomInDown" style={{ width: "25%", borderRadius: "5px", margin: "auto", fontSize: "17px", color: "white", blockSize: "50px", backgroundColor: "dodgerblue" }} type="button"
+                            onClick={()=> {FinalRegister();notify()}}
+
                         >
                             <lord-icon
                                 src="https://cdn.lordicon.com/egiwmiit.json"
@@ -47,18 +126,18 @@ const Register = () => {
                             </lord-icon>
                         </button>
                         <div>
-                            <Link to="/login"><p class="animate__animated animate__bounceInUp" style={{fontSize:"20px"}}>Already have an account?, Click Here!</p></Link>
+                            <Link to="/login"><p class="animate__animated animate__bounceInUp" style={{ fontSize: "20px" }}>Already have an account?, Click Here!</p></Link>
                         </div>
                         <Outlet />
                     </div>
                 </div>
             </div>
             <div style={{ zIndex: "5" }}>
-                <hr style={{ color:"white", backgroundColor: "white", height: "3px", marginTop: "60em" }}></hr>
+                <hr style={{ color: "white", backgroundColor: "white", height: "3px", marginTop: "60em" }}></hr>
                 <CustomizedDialogs />
-                <hr style={{ color:"white", backgroundColor: "white", height: "3px", marginTop: "0em" }}></hr>
+                <hr style={{ color: "white", backgroundColor: "white", height: "3px", marginTop: "0em" }}></hr>
                 <ContactUs />
-                <hr style={{ color:"white", backgroundColor: "white", height: "3px", marginTop: "0em" }}></hr>
+                <hr style={{ color: "white", backgroundColor: "white", height: "3px", marginTop: "0em" }}></hr>
                 <ReturnPolicy />
             </div>
             <div>

@@ -8,8 +8,8 @@ import ReactDOM from "react-dom/client";
 import Register from './app/Components/Register';
 import ProductsCards from './app/Components/ProductsCards';
 import LoginPage from './app/Components/LoginPage';
-import GiannisUs from './app/ItemPages/GiannisUs';
 import MyProfile from './app/Components/MyProfile';
+import FinalBuy from './app/Components/FinalBuy';
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -20,11 +20,10 @@ root.render(
         <Routes>
           <Route path="/" element={<App/>}>
             <Route path="register" element={<Register/>}></Route>
-            <Route path="products" element={<ProductsCards/>}>
-              <Route path=":item" element={<GiannisUs/>}/>
-            </Route>
+            <Route path="products" element={<ProductsCards/>}></Route>
             <Route path="login" element={<LoginPage/>}/>
-            <Route path="/myprofile" element={<MyProfile/>}></Route>
+            <Route path="myprofile" element={<MyProfile/>}></Route>
+            <Route path='final_buy' element={<FinalBuy/>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

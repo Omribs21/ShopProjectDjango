@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import UpdateUser,DeleteAllWishlist,GetWishlist,DeleteFromWishlist,Wishlist,AddOrder,GetProducts,UpdatePriceToPrudct,AddCategory,GetProductsByCategory, MyTokenObtainPairView,AddProduct
+from .views import UpdateUser,CleanWishlist,GetWishlist,DeleteFromWishlist,Wishlist,AddOrder,GetProducts,UpdatePriceToPrudct,AddCategory,GetProductsByCategory, MyTokenObtainPairView,AddProduct
 
 
 urlpatterns = [
@@ -19,6 +19,6 @@ urlpatterns = [
      path('AddToWishlist/',views.AddToWishlist), # Add an item to the user Wishlist 
      path('RemoveFromWishlist/', views.DeleteFromWishlist), # Remove specific item from Wishlist
      path('GetWishlist/',views.GetWishlist), # Get all of the user items in his Wishlist
-     path('DeleteWishlist/', views.DeleteAllWishlist), # Clean the user Wishlist.
+     path('CleanWishlist/', views.CleanWishlist), # Clean the user Wishlist.
      path('UpdateUser/',views.UpdateUser),
 ]

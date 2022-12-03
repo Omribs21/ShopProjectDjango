@@ -22,6 +22,8 @@ import { GetWishlistAsync, selectproductswishlist, selectlength } from '../Slice
 import 'animate.css';
 import WishlistDrawer from './WishlistDrawer';
 import MyCartDrawer from './MycartDrawer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -75,7 +77,9 @@ export default function PrimarySearchAppBar() {
   const Products = useSelector(selectproductswishlist)
   const WishlistLength = useSelector(selectlength)
   const [myCart, setmyCart] = useState([])
+  const [items, setitems] = useState(0)
   const [amountCng, setamountCng] = useState(0)
+
   useEffect(() => {
     if (token != "") {
       setTokenValue(true);
@@ -87,20 +91,31 @@ export default function PrimarySearchAppBar() {
     dispatch(GetWishlistAsync({ "Token": token }))
   }, [token])
 
-  const [items, setItems] = useState([]);
-  const [cartLength, setcartLength] = useState(0)
+  const notifyUser = () => toast.warn('Log In first!', {
+    limit: 1,
+    position: "top-left",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: false,
+    progress: undefined,
+    theme: "colored",
+    style: { color: "black" },
+  });
 
-  // useEffect(() => {
-  //   const items = JSON.parse(localStorage.getItem('items'));
-  //   if (items) {
-  //     setItems(items);
-  //   }
-  // }, []);
+
   
   // get the cart length
-  useEffect(() => {
-    setcartLength(localStorage.getItem('myCart').length)
-  }, [myCart]);
+  // useEffect(() => {
+  //   setmyCart(JSON.parse(localStorage.getItem("myCart")));
+  // }, [myCart]);
+
+  // useEffect(() => {
+  //   setitems(myCart.length)
+  //   console.log(items)
+  // }, [myCart])
+
 
 
 
@@ -116,6 +131,7 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -212,30 +228,36 @@ export default function PrimarySearchAppBar() {
             marginLeft="38%"
             fontSize="40px"
             textAlign="center">
-            <Link class="animate__animated animate__pulse" to="/products"><p style={{ color: "white", fontSize: "40px", fontFamily: "monospace" }} class="animate__animated animate__wobble">Sofa Sportim</p></Link>
+            <Link class="animate__animated animate__pulse" to="/products"><p style={{ color: "white", fontSize: "40px", fontFamily: "monospace" }} class="animate__animated animate__wobble">Sofa Sport</p></Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
               {TokenValue === false ?
-                <Badge badgeContent={0} color="error">
-                  <lord-icon
-                    src="https://cdn.lordicon.com/pnhskdva.json"
-                    trigger="hover"
-                    colors="primary:#ffffff">
-                  </lord-icon>
-                </Badge> :
+                <button style={{ backgroundColor: "transparent", borderColor: "transparent" }} onClick={() => { notifyUser() }}>
+                  <ToastContainer limit={1} />
+                  <Badge badgeContent={0} color="error">
+                    <lord-icon
+                      src="https://cdn.lordicon.com/pnhskdva.json"
+                      trigger="hover"
+                      colors="primary:#ffffff">
+                    </lord-icon>
+                  </Badge>
+                </button>
+                :
                 <Badge badgeContent={WishlistLength} style={{ fontSize: "20px" }} color="error">
                   <WishlistDrawer />
                 </Badge>}
             </IconButton>
 
             <IconButton>
-              <Badge badgeContent={5} color="error">
+              <Badge badgeContent={items} color="error">
                 <MyCartDrawer />
               </Badge>
             </IconButton>
+
+
 
             <IconButton
               size="50px"

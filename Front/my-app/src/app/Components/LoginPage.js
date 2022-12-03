@@ -15,15 +15,7 @@ const Login = () => {
     const token = useSelector(selectToken);
     const navigate = useNavigate();
 
-    const [items, setItems] = useState([]);
-
-    useEffect(() => {
-        const items = JSON.parse(localStorage.getItem('items'));
-        if (token != '') {
-            setItems(items);
-        }
-    }, []);
-
+   
     useEffect(() => {
         if (token != '') {
             navigate("/products");
@@ -55,13 +47,10 @@ const Login = () => {
                                 style={{ width: "50px", height: "30px", color: "white" }}>
                             </lord-icon>
                         </button>
-                        {/* {alog === true ? "succes" : "nah"} */}
-
-                        {/* <button onClick={() => { dispatch(doSignOutAsync({ "token": token })) }}>Logout</button> */}
                     </div>
                     <br></br><br></br>
                     <div>
-                        <Link to="/register"><p class="animate__animated animate__bounceInUp" style={{ fontSize: "20px" }}>Don't have an acoount?, Click Here!</p></Link>
+                        <Link to="/register"><p class="animate__animated animate__bounceInUp" style={{ fontSize: "20px" }}>Don't have an acount?, Click Here!</p></Link>
                     </div>
                     <Outlet />
                 </div>

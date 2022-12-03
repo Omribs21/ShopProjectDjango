@@ -14,6 +14,11 @@ import ReturnPolicy from './ReturnPolicy';
 import MessiModal from './Modal2';
 import NestedModal from './PersonalOrderModal';
 import PersonalModal from './PersonalOrderModal';
+import JuventusPersonalModal from './JuventusPersonalModal';
+import PsgPersonalModal from './PsgPersonalModal';
+import ChelseaPersonalModal from './ChelseaPersonalModal';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductsCards = () => {
     const dispatch = useDispatch()
@@ -24,13 +29,12 @@ const ProductsCards = () => {
     // run when component load
     useEffect(() => {
         setmyCart(JSON.parse(localStorage.getItem("myCart")));
-    }, []);
+    }, [myCart.length]);
 
     //run every change in the length of myCart
-    useEffect(() => {
-        console.table(myCart);
-        localStorage.setItem("myCart", JSON.stringify(myCart));
-    }, [myCart.length, amountCng]);
+    // useEffect(() => {
+    //     localStorage.setItem("myCart", JSON.stringify(myCart));
+    // }, [myCart]);
 
 
     const addToCart = (item) => {
@@ -62,11 +66,23 @@ const ProductsCards = () => {
     // },[myCart.length, amountCng])
     const button = document.getElementById("wishlist-btn")
 
-    // useEffect(() => {
-    //     button.addEventListener("click", () => {
-    //        alert('stop');
-    //     })
-    // }, [])
+
+
+    const notify = async () => {
+        if (token == '') {
+            toast.info('Log in first', {
+                position: "bottom-left",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+    }
+
 
 
 
@@ -95,13 +111,11 @@ const ProductsCards = () => {
                             </div>
                         </div>
                     </div>
-                    {/* <button onClick={() => console.table(myCart)}>show cart</button>                */}
 
                     <div className="col-sm-3">
                         <div key={2} className="panel panel-primary">
                             <div style={{ fontSize: "medium" }} className="panel-heading">Messi shirt</div> {/*name of the product */}
                             <div className="panel-body">
-                                {/* <img src={ADundershirt} className="img-responsive" style={{ width: "150px", height: "185px", margin: "auto" }} alt="nice" /> */}
                                 <MessiModal></MessiModal>
                             </div>
                             <div style={{ fontSize: "30px", justifyContent: "space-around" }} className="panel-footer">
@@ -118,23 +132,24 @@ const ProductsCards = () => {
                             </div>
                         </div>
                     </div>
+
                     {/* COMPLETE CARD! ID=3 */}
+
                     <div className="col-sm-3">
                         <div key={3} className="panel panel-primary">
                             <div style={{ fontSize: "medium" }} className="panel-heading">Giannis Undershirt</div> {/*name of the product */}
                             <div className="panel-body">
                                 <CustomizedDialogsModal></CustomizedDialogsModal>
                             </div>
-                            <div style={{ fontSize: "30px", justifyContent: "space-around" }} className="panel-footer">
-                                <button style={{ fontSize: "10px" }} onClick={() => dispatch(AddToWishlistAsync({ "Token": token, "prod_id": 3 }))} type="button" className="btn btn-primary" ><FavoriteBorderIcon style={{ width: "20px", height: "20px" }} ></FavoriteBorderIcon>+</button>
-                                <span style={{ padding: "10px", fontSize: "20px", color: "black" }}>מחיר: 150</span>
-                                <button style={{ fontSize: "10px" }} onClick={() => addToCart({
-                                    _id: ALLPRODUCTS[2]._id,
-                                    desc: ALLPRODUCTS[2].desc,
-                                    amount: 1,
-                                    price: ALLPRODUCTS[2].price,
-                                })} type="button" className="btn btn-primary" >+<ShoppingBagOutlinedIcon style={{ width: "20px", height: "20px" }}></ShoppingBagOutlinedIcon></button>
-                                {/* {() => dispatch(GetProdByIdAsync(Key))} */}
+                            <div style={{ display: "flex", flexDirection: "row" }} className="panel-footer">
+                                <div>
+                                    <button style={{ fontSize: "10px", marginRight: "45%" }} onClick={() => { notify(); dispatch(AddToWishlistAsync({ "Token": token, "prod_id": 3 })); }} type="button" className="btn btn-primary" >
+                                    
+                                    <FavoriteBorderIcon style={{ width: "20px", height: "20px" }} ></FavoriteBorderIcon>+</button>
+                                </div>
+                                <div style={{ marginLeft: "20%" }}>
+                                    <p style={{ fontSize: "25px" }}>150₪</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -165,43 +180,57 @@ const ProductsCards = () => {
                     <div className="row">
                         <div className="col-sm-3">
                             <div className="panel panel-primary">
-                                <div className="panel-heading" style={{color:"white",fontSize: "medium"}}>Argentina 2022/2023</div>
+                                <div className="panel-heading" style={{ color: "white", fontSize: "medium" }}>Argentina 2022/2023</div>
                                 <div className="panel-body"><PersonalModal></PersonalModal></div>
-                                <div style={{color:"black", fontSize:"25px"}} className="panel-footer">150.00₪</div>
+                                <div style={{ color: "black", fontSize: "25px", display: "flex", flexDirection: "row", justifyContent: "center" }} className="panel-footer"><p><del>190.00₪</del> 150.00₪</p></div>
                             </div>
                         </div>
                         <div className="col-sm-3">
                             <div className="panel panel-primary">
-                                <div className="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div className="panel-body"><img src="https://picsum.photos/100/100" className="img-responsive" style={{ width: "100%" }} alt="nice" /></div>
-                                <div className="panel-footer">Buy 50 mobiles and get a gift card</div>
+                                <div className="panel-heading" style={{ color: "white", fontSize: "medium" }}>Juventus Shirt 2022/2023</div>
+                                <div className="panel-body"><JuventusPersonalModal></JuventusPersonalModal></div>
+                                <div style={{ color: "black", fontSize: "25px", display: "flex", flexDirection: "row", justifyContent: "center" }} className="panel-footer"><p><del>200.00₪</del> 160.00₪</p></div>
                             </div>
                         </div>
                         <div className="col-sm-3">
                             <div className="panel panel-primary">
-                                <div className="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div className="panel-body"><img src="https://picsum.photos/100/100" className="img-responsive" style={{ width: "100%" }} alt="nice" /></div>
-                                <div className="panel-footer">Buy 50 mobiles and get a gift card</div>
+                                <div className="panel-heading" style={{ color: "white", fontSize: "medium" }}>PSG Shirt 2022/2023</div>
+                                <div className="panel-body"><PsgPersonalModal></PsgPersonalModal></div>
+                                <div style={{ color: "black", fontSize: "25px", display: "flex", flexDirection: "row", justifyContent: "center" }} className="panel-footer"><p><del>200.00₪</del> 180.00₪</p></div>
                             </div>
                         </div>
                         <div className="col-sm-3">
                             <div className="panel panel-primary">
-                                <div className="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div className="panel-body"><img src="https://picsum.photos/100/100" className="img-responsive" style={{ width: "100%" }} alt="nice" /></div>
-                                <div className="panel-footer">Buy 50 mobiles and get a gift card</div>
-                            </div>
+                                <div className="panel-heading" style={{ color: "white", fontSize: "medium" }}>Chelsea Shirt 2022/2023</div>
+                                <div className="panel-body"><ChelseaPersonalModal></ChelseaPersonalModal></div>
+                                <div style={{ color: "black", fontSize: "25px", display: "flex", flexDirection: "row", justifyContent: "center" }} className="panel-footer"><p><del>190.00₪</del> 140.00₪</p></div>                            </div>
                         </div>
                     </div>
                 </div>
+                <div style={{ height: "200px", marginTop: "0%" }}>
+                    <hr style={{ color: "white", backgroundColor: "white", height: "3px", marginTop: "60em" }}></hr>
+                    <CustomizedDialogs />
+                    <hr style={{ color: "white", backgroundColor: "white", height: "3px", marginTop: "0em" }}></hr>
+                    <ContactUs />
+                    <hr style={{ color: "white", backgroundColor: "white", height: "3px", marginTop: "0em" }}></hr>
+                    <ReturnPolicy />
+                </div>
+                <div>
+                    <svg class="waves" xmlns='http://www.w3.org/2000/svg' xmlnsXlink='http://www.w3.org/1999/xlink'
+                        viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering={"auto"}>
+                        <defs>
+                            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                        </defs>
+                        <g class="parallax">
+                            <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+                            <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                            <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                            <use xlinkHref="#gentle-wave" x="48" y="7" fill="#fff" />
+                        </g>
+                    </svg>
+                </div>
             </div>
-            <div style={{ height: "200px", marginTop: "0%" }}>
-                <hr style={{ color: "white", backgroundColor: "white", height: "3px", marginTop: "60em" }}></hr>
-                <CustomizedDialogs />
-                <hr style={{ color: "white", backgroundColor: "white", height: "3px", marginTop: "0em" }}></hr>
-                <ContactUs />
-                <hr style={{ color: "white", backgroundColor: "white", height: "3px", marginTop: "0em" }}></hr>
-                <ReturnPolicy />
-            </div>
+
         </div>
 
     )
